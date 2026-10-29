@@ -2409,6 +2409,88 @@
       stroke-width: 2
     }
 
+    .okmark.ok {
+      position: relative;
+      width: 76px;
+      height: 76px;
+      background: linear-gradient(145deg, #3ccb82, #1b8f55);
+      box-shadow: 0 14px 28px -10px rgba(27, 143, 85, .6), inset 0 1px 0 rgba(255, 255, 255, .45);
+      animation: okpop .55s var(--ease) both
+    }
+
+    .okmark.ok::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(40, 170, 105, .5);
+      animation: okring 1.3s ease-out .45s 1 both;
+      pointer-events: none
+    }
+
+    .okmark.ok svg {
+      width: 36px;
+      height: 36px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .okmark.ok path {
+      stroke-dasharray: 30;
+      stroke-dashoffset: 30;
+      animation: okdraw .45s ease-out .3s forwards
+    }
+
+    @keyframes okpop {
+      0% {
+        transform: scale(.4);
+        opacity: 0
+      }
+
+      70% {
+        transform: scale(1.07);
+        opacity: 1
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    @keyframes okdraw {
+      to {
+        stroke-dashoffset: 0
+      }
+    }
+
+    @keyframes okring {
+      0% {
+        transform: scale(1);
+        opacity: .9
+      }
+
+      100% {
+        transform: scale(1.7);
+        opacity: 0
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+
+      .okmark.ok,
+      .okmark.ok::after,
+      .okmark.ok path {
+        animation: none
+      }
+
+      .okmark.ok path {
+        stroke-dashoffset: 0
+      }
+    }
+
     .order {
       display: flex;
       align-items: center;
@@ -4219,7 +4301,7 @@
       };
       V.done = function () {
         var o = state.orders[0] || { no: 'TD-00000', total: 0, items: 0, name: '' };
-        return '<section class="panel glass done"><span class="okmark dark">' + icon('check') + '</span><p class="eyebrow">Order placed</p><h1 class="title" style="font-size:clamp(2.2rem,9vw,3.4rem)">Thank you' + (o.name ? ', ' + esc(o.name.split(' ')[0]) : '') + '.</h1>' +
+        return '<section class="panel glass done"><span class="okmark ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4.2 4.2L18.5 7.8"/></svg></span><p class="eyebrow">Order placed</p><h1 class="title" style="font-size:clamp(2.2rem,9vw,3.4rem)">Thank you' + (o.name ? ', ' + esc(o.name.split(' ')[0]) : '') + '.</h1>' +
           '<p class="muted">Your order <b style="color:var(--ink);font-weight:500">' + o.no + '</b> for ' + money(o.total) + ' is confirmed in this prototype. Delivery takes 1–2 days across Bangladesh.</p>' +
           '<div class="row" style="justify-content:center"><button class="btn dark" type="button" data-go="shop">Continue shopping</button><button class="btn btn-light" type="button" data-go="home">Back home</button></div></section>';
       };
